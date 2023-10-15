@@ -1,0 +1,24 @@
+{
+  "name": "serper",
+  "version": "1.0.1",
+  "description": "A client for the Serper Google Search API.",
+  "main": "index.js",
+  "repository": "https://github.com/TKDKid1000/serper",
+  "author": "TKDKid1000",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.6",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^4.0.2"
+  }
+}
