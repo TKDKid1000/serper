@@ -1,21 +1,20 @@
-import { NumRequestOptions, RequestOptions, SearchRequestOptions, SerperClientOptions } from "./types";
-
-const defaultRequestOptions: RequestOptions = {
-  query: "",
-  country: "us",
-  locale: "en",
-  autocorrect: true,
-  page: 1
-};
-
-const defaultNumRequestOptions: NumRequestOptions = {
-  query: "",
-  country: "us",
-  locale: "en",
-  autocorrect: true,
-  page: 1,
-  num: 10
-};
+import { MissingApiKeyError } from "./errors";
+import type {
+  ImagesRequestOptions,
+  ImagesResponse,
+  NewsRequestOptions,
+  NewsResponse,
+  NumRequestOptions,
+  PlacesRequestOptions,
+  PlacesResponse,
+  RequestOptions,
+  SearchRequestOptions,
+  SearchResponse,
+  SerperClientOptions,
+  SerperResponse,
+  VideosRequestOptions,
+  VideosResponse
+} from "./types";
 
 export class Serper {
   private apiKey: string;
@@ -28,28 +27,43 @@ export class Serper {
     this.basePath = basePath || "https://google.serper.dev";
   }
 
-  private async request(body: BodyInit) {
-    return fetch(`${this.basePath}/search`, {
+  private async request(
+    query: string | RequestOptions | NumRequestOptions,
+    path: string
+  ): Promise<SerperResponse> {
+    if (!this.apiKey) throw new MissingApiKeyError();
+    if (typeof query === "string") {
+      return this.request(
+        {
+          q: query
+        },
+        path
+      );
+    }
+    return fetch(`${this.basePath}/${path}`, {
       method: "POST",
       headers: {
         "x-api-key": this.apiKey,
         "content-type": "application/json"
       },
-      body,
+      body: JSON.stringify(query),
       signal: AbortSignal.timeout(this.timeout)
-    });
+    }).then((res) => res.json());
   }
 
-  public async search(query: string | SearchRequestOptions) {
-    if (typeof query === "string") {
-      return this.search({
-        query
-      });
-    }
-    return this.request(JSON.stringify(query));
+  public search(query: string | SearchRequestOptions): Promise<SearchResponse> {
+    return this.request(query, "search") as Promise<SearchResponse>;
   }
-  public async news() {}
-  public async images() {}
-  public async videos() {}
-  public async places() {}
+  public news(query: string | NewsRequestOptions): Promise<NewsResponse> {
+    return this.request(query, "news") as Promise<NewsResponse>;
+  }
+  public images(query: string | ImagesRequestOptions): Promise<ImagesResponse> {
+    return this.request(query, "images") as Promise<ImagesResponse>;
+  }
+  public videos(query: string | VideosRequestOptions): Promise<VideosResponse> {
+    return this.request(query, "videos") as Promise<VideosResponse>;
+  }
+  public places(query: string | PlacesRequestOptions): Promise<PlacesResponse> {
+    return this.request(query, "places") as Promise<PlacesResponse>;
+  }
 }

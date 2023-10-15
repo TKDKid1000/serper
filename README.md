@@ -53,6 +53,8 @@ const serper = new Serper({
 - [ ] Better request prechecking.
 - [ ] Unit tests.
 - [ ] Documentation.
+- [ ] Deno support.
+- [ ] Module bundler.
 - [ ] Any other ideas you may have.
 
 ## License
