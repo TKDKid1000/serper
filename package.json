@@ -2,15 +2,17 @@
   "name": "serper",
   "version": "1.0.2",
   "description": "A client for the Serper Google Search API.",
-  "main": "lib/serper.js",
-  "module": "src/serper.ts",
-  "types": "lib/serper.d.ts",
+  "main": "lib/index.js",
+  "module": "src/index.ts",
+  "types": "lib/index.d.ts",
   "repository": "https://github.com/TKDKid1000/serper",
   "author": "TKDKid1000",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "docs": "typedoc src/index.ts",
+    "serve:docs": "serve docs"
   },
   "devDependencies": {
     "@types/node": "^20.8.6",
@@ -18,6 +20,8 @@
     "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^8.51.0",
     "prettier": "^3.0.3",
+    "serve": "^14.2.1",
+    "typedoc": "^0.25.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {
