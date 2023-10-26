@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2016",
-    "module": "UMD",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "outDir": "./lib",
     "baseUrl": "./",
@@ -11,9 +11,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "paths": {
-      "serper": [
-        "lib/src/serper.ts"
-      ]
+      "serper": ["lib/src/serper.ts"]
     }
   },
   "include": ["src", "types/types.d.ts"],

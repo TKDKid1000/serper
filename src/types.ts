@@ -1,23 +1,65 @@
-export type SerperClientOptions = {
+/**
+ * Options for initializing a Serper Client.
+ * @property apiKey - The Serper API key.
+ * @property timeout - Request timeout in milliseconds. Defaults to true.
+ * @property basePath - Different Serper API root, if needed. Defaults to production Serper path.
+ * @property cache - Enable cache if true. Defaults to true.
+ */
+export interface SerperClientOptions {
   apiKey: string;
   timeout?: number;
   basePath?: string;
-};
+  cache?: boolean;
+}
 
-export type RequestOptions = {
+export interface Paginate<T> {
+  /**
+   * Paginate to the next page, does not replace the object.
+   * @returns The next page of search results.
+   */
+  nextPage(): Promise<T & Paginate<T>>;
+  /**
+   * Paginate to the previous page, does not replace the object.
+   * @returns The previous page of search results.
+   */
+  prevPage(): Promise<T & Paginate<T>>;
+  /**
+   * Paginate to a specific page, does not replace the object.
+   * @param page The page to navigate to. Must be an integer greater than 0.
+   * @returns The specified page of search results.
+   */
+  toPage(page: number): Promise<T & Paginate<T>>;
+}
+
+/**
+ * Options for making an arbitrary result length search request. Used for images, videos, and places.
+ *
+ * For search and news, use {@link NumRequestOptions}.
+ *
+ * @property q - The search query.
+ * @property country - Optional country code.
+ * @property locale - Optional locale for language or region.
+ * @property autocorrect - Enable autocorrection if true.
+ * @property page - Page number for paginated results.
+ */
+export interface RequestOptions {
   q: string;
   country?: string;
   locale?: string;
   autocorrect?: boolean;
   page?: number;
-};
-export type NumRequestOptions = RequestOptions & { num?: number };
+}
 
-export type SearchRequestOptions = NumRequestOptions;
-export type NewsRequestOptions = NumRequestOptions;
-export type ImagesRequestOptions = RequestOptions;
-export type VideosRequestOptions = RequestOptions;
-export type PlacesRequestOptions = RequestOptions;
+/**
+ * Options for making a fixed result length search request. Used for search and news.
+ *
+ * For images, videos, and places, use {@link RequestOptions}.
+ *
+ * @property num - Number of results to return.
+ */
+export interface NumRequestOptions extends RequestOptions {
+  num?: number;
+}
 
 export type ResponseParameters<T extends string> = {
   q: string;
@@ -58,13 +100,13 @@ export type PeopleAlsoAsk = {
   link: string;
 };
 
-export type SearchResponse = {
+export interface SearchResponse {
   searchParameters: ResponseParameters<"search">;
   knowledgeGraph?: KnowledgeGraph;
   organic: OrganicSearchResult[];
   peopleAlsoAsk: PeopleAlsoAsk[];
   relatedSearches: { query: string }[];
-};
+}
 
 export type Image = {
   title: string;
@@ -81,10 +123,10 @@ export type Image = {
   position: number;
 };
 
-export type ImagesResponse = {
+export interface ImagesResponse {
   searchParameters: ResponseParameters<"images">;
   images: Image[];
-};
+}
 
 export type Video = {
   title: string;
@@ -95,10 +137,10 @@ export type Video = {
   position: number;
 };
 
-export type VideosResponse = {
+export interface VideosResponse {
   searchParameters: ResponseParameters<"videos">;
   videos: Video[];
-};
+}
 
 export type Place = {
   position: number;
@@ -114,10 +156,10 @@ export type Place = {
   cid: string;
 };
 
-export type PlacesResponse = {
+export interface PlacesResponse {
   searchParameters: ResponseParameters<"places">;
   places: Place[];
-};
+}
 
 export type News = {
   title: string;
