@@ -83,7 +83,7 @@ All responses from the Serper Client are locally cached to reduce credit usage d
 
 ## Documentation and Examples
 
-API docs are available online [here](docs/), and a large collection of usage examples are available in the [examples/](examples/) directory.
+API docs are available online [here](https://tkdkid1000.github.io/serper/), and a large collection of usage examples are available in the [examples](examples/) directory.
 
 > **Note:** All examples assume top level await, which is supported in modern Node.js and most modern browers.
 
@@ -94,7 +94,7 @@ API docs are available online [here](docs/), and a large collection of usage exa
 - [ ] Better request prechecking.
 - [ ] External (ie. Redis) caching.
 - [ ] Unit tests.
-- [ ] Documentation.
+- [x] Documentation.
 - [ ] Deno support.
 - [ ] Module bundler.
 - [ ] Any other ideas you may have.
